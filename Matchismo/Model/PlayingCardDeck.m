@@ -22,6 +22,7 @@
                 [self addCard:card atTop:YES];
             }
         } }
+    NSLog(@"Success");
     return self;
 }
 
