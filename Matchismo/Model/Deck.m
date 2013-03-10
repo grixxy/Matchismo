@@ -23,7 +23,6 @@
 
 - (Card *)drawRandomCard
 {
-    NSLog(@"drawing card");
     Card *randomCard = nil;
     if (self.cards.count) {
         unsigned index = arc4random() % self.cards.count;
