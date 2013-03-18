@@ -11,6 +11,7 @@
 @interface CardMatchingGame()
 @property(nonatomic, strong) NSMutableArray* cards;
 @property(nonatomic) int score;
+@property(nonatomic) NSString* description;
 @end
 
 @implementation CardMatchingGame
@@ -58,6 +59,8 @@
                         otherCard.unplayable = TRUE;
                         card.unplayable = TRUE;
                         self.score+=matchScore * MATCH_BONUS;
+                        self.description = [NSString stringWithFormat:@"Matched %@ && %@ for %d points", card, otherCard, (matchScore * MATCH_BONUS)];
+                        [NSString stringWithFormat:@"%@", self.game];
                     
                     } else {
                         otherCard.faceUp = NO;
@@ -69,6 +72,10 @@
         }
         card.faceUp = !card.isFaceUp;
     }
+}
+
+-(NSString *) description{
+    return self.description;
 }
 
 @end
