@@ -17,6 +17,7 @@
 
 -(Card *) cardAtIndex:(NSUInteger) index;
 
+
 @property(nonatomic, readonly) int score;
 
 

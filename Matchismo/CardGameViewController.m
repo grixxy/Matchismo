@@ -21,6 +21,11 @@
 @end
 
 @implementation CardGameViewController
+- (IBAction)dealButton:(id)sender {
+    self.game = nil;
+    self.flipCounts = 0;
+    [self updateUI];
+}
 
 
 -(CardMatchingGame *) game{
@@ -40,7 +45,7 @@
         cardButton.alpha = card.isUnplayable ? 0.3 : 1.0;
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-    self.lastFlipLabel.text = [NSString stringWithFormat:@"%@", self.game];
+    self.lastFlipLabel.text = self.game.description;
 
 }
 
