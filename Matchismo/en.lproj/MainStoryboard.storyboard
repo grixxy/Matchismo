@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D76" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="2">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -260,6 +260,10 @@
                         <outletCollection property="cardButtons" destination="81z-bV-OhB" id="cg1-44-fZi"/>
                         <outletCollection property="cardButtons" destination="DCY-fA-rfR" id="kfe-t9-cg0"/>
                         <outletCollection property="cardButtons" destination="92t-WA-pqx" id="N6Y-RR-1L3"/>
+                        <outletCollection property="cardButtons" destination="Mce-aT-lRu" id="3vT-g9-2AU"/>
+                        <outletCollection property="cardButtons" destination="bJl-9L-DR7" id="Sto-HF-jUq"/>
+                        <outletCollection property="cardButtons" destination="wgO-bO-GDO" id="Z7h-Ad-Lmz"/>
+                        <outletCollection property="cardButtons" destination="1sK-So-jsM" id="BOe-qf-jML"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>

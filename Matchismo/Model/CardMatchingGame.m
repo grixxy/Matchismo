@@ -52,30 +52,34 @@
     Card *card = [self cardAtIndex:index];
     if(!card.isUnplayable){
         if(!card.isFaceUp){
+            self.score -= FLIP_COST;
+            self.description = [NSString stringWithFormat:@"Flipped up %@ ", card.contents ];            
             for(Card* otherCard in self.cards){
                 if(otherCard.isFaceUp && !otherCard.isUnplayable){
                     int matchScore = [card match:@[otherCard]];
                     if(matchScore){
                         otherCard.unplayable = TRUE;
                         card.unplayable = TRUE;
-                        self.score+=matchScore * MATCH_BONUS;
-                        self.description = [NSString stringWithFormat:@"Matched %@ && %@ for %d points", card, otherCard, (matchScore * MATCH_BONUS)];
-                        [NSString stringWithFormat:@"%@", self.game];
+                        int win = matchScore * MATCH_BONUS
+                        self.score+=win;
+                        self.description = [NSString stringWithFormat:@"Matched %@ && %@ for %d points", card.contents ,otherCard.contents, win];
                     
                     } else {
                         otherCard.faceUp = NO;
-                        self.score -= MISMATCH_PENALTY;
+                        int lose = MISMATCH_PENALTY;
+                        self.score -= lose;
+                        self.description = [NSString stringWithFormat:@"%@ and %@ didn't match! %d points penalty!", card.contents ,otherCard.contents, lose];
                     }
                 }
             }
-            self.score -= FLIP_COST;
         }
         card.faceUp = !card.isFaceUp;
     }
 }
 
 -(NSString *) description{
-    return self.description;
+    if(!_description) _description = @"";
+    return _description;
 }
 
 @end
