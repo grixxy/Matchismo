@@ -12,6 +12,7 @@
 #import "CardMatchingGame.h"
 
 @interface CardGameViewController ()
+@property (weak, nonatomic) IBOutlet UISegmentedControl *cardSelector;
 @property (weak, nonatomic) IBOutlet UILabel *lastFlipLabel;
 @property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
 @property (nonatomic) int flipCounts;
@@ -30,7 +31,9 @@
 
 -(CardMatchingGame *) game{
     if(!_game){
-        _game = [[CardMatchingGame alloc] initWithCardCount:self.cardButtons.count usingDeck: [[PlayingCardDeck alloc]init]];
+        NSUInteger complexity = self.cardSelector.selectedSegmentIndex==0?2:3;
+        NSLog(@"complexity is %d", complexity);
+        _game = [[CardMatchingGame alloc] initWithCardCount:self.cardButtons.count usingDeck:[[PlayingCardDeck alloc] init] withComplexity:complexity];
     }
     return _game;
 }
