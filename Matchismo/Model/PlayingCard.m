@@ -41,6 +41,8 @@
 
 -(int) match:(NSArray* ) otherCards{
     int score = 0;
+    int matchedSuit = 0;
+    int matchedRank = 0;
     
     for(PlayingCard *otherCard in otherCards){
         
