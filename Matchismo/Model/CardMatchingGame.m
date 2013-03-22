@@ -7,6 +7,7 @@
 //
 
 #import "CardMatchingGame.h"
+#import "PlayingCard.h"
 
 @interface CardMatchingGame()
 @property(nonatomic, strong) NSMutableArray* cards;
@@ -64,22 +65,24 @@
                 }
             }
             
-            if(cardsToMatch.count>self.numberOfCardsToCompare-1){
+            if(cardsToMatch.count==self.numberOfCardsToCompare-1){
                 //time to count score!!!
                 int matchScore = [card match:cardsToMatch];
                 if(matchScore){
-                    //todo perform selector on all the array objects
-                    otherCard.unplayable = TRUE;
-                    card.unplayable = TRUE;
-                    int win = matchScore * MATCH_BONUS
+                    //unplayable TRUE
+                    SEL unplayable = @selector(setUnplayable:);
+                    [cardsToMatch makeObjectsPerformSelector:unplayable withObject:[NSNumber numberWithBool:YES]];
+                    card.unplayable = YES;
+                    int win = matchScore * MATCH_BONUS;
                     self.score+=win;
-                    self.description = [NSString stringWithFormat:@"Matched %@ && %@ for %d points", card.contents ,otherCard.contents, win];
+                    self.description = [NSString stringWithFormat:@"Matched %@ for %d points",[cardsToMatch componentsJoinedByString:@", "] , win];
                 
                 } else {
-                    otherCard.faceUp = NO;
+                    SEL faceUp = @selector(setFaceUp:);
+                    [cardsToMatch makeObjectsPerformSelector:faceUp withObject:NO];
                     int lose = MISMATCH_PENALTY;
                     self.score -= lose;
-                    self.description = [NSString stringWithFormat:@"%@ and %@ didn't match! %d points penalty!", card.contents ,otherCard.contents, lose];
+                    self.description = [NSString stringWithFormat:@"%@ didn't match! %d points penalty!", [cardsToMatch componentsJoinedByString:@", "], lose];
                 }
             }
             
