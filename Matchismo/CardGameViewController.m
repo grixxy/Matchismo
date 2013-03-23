@@ -25,6 +25,7 @@
 - (IBAction)dealButton:(id)sender {
     self.game = nil;
     self.flipCounts = 0;
+    self.cardSelector.enabled = YES;
     [self updateUI];
 }
 
@@ -32,15 +33,20 @@
 -(CardMatchingGame *) game{
     if(!_game){
         NSUInteger complexity = self.cardSelector.selectedSegmentIndex==0?2:3;
-        NSLog(@"complexity is %d", complexity);
         _game = [[CardMatchingGame alloc] initWithCardCount:self.cardButtons.count usingDeck:[[PlayingCardDeck alloc] init] withComplexity:complexity];
     }
     return _game;
 }
 
 -(void) updateUI{
+    UIImage *cardBackImage = [UIImage imageNamed:@"Untitled.png"];
     for(UIButton *cardButton in self.cardButtons){
         Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
+        if(!card.isFaceUp){
+         [cardButton setImage:cardBackImage forState:UIControlStateNormal];
+        } else {
+         [cardButton setImage:nil forState:UIControlStateNormal];
+        }
         [cardButton setTitle:card.contents forState:UIControlStateSelected];
         [cardButton setTitle:card.contents forState:UIControlStateSelected|UIControlStateDisabled];
         cardButton.selected = card.isFaceUp;
@@ -66,6 +72,7 @@
 - (IBAction)flipCard:(UIButton *)sender {
     [self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
     self.flipCounts++;
+    self.cardSelector.enabled=NO;
     [self updateUI];
     
 }
