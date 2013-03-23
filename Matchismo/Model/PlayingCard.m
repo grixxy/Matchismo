@@ -45,12 +45,16 @@
     int matchedRank = 0;
     
     for(PlayingCard *otherCard in otherCards){
-        
         if([otherCard.suit isEqualToString:self.suit]){
-            score = 1;
+            matchedSuit++;
         } else if(otherCard.rank == self.rank){
-            score = 4;
+            matchedRank++;
         }
+    }
+    if(otherCards.count==matchedSuit){
+        score = otherCards.count;
+    } else if (otherCards.count==matchedRank){
+        score = 4* matchedRank;
     }
     
     return score;
@@ -65,6 +69,10 @@
     if (rank <= [ PlayingCard maxRank]) {
         _rank = rank;
     }
+}
+
+-(NSString*) description{
+    return self.contents;
 }
 
 @end

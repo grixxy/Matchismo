@@ -75,14 +75,14 @@
                     card.unplayable = YES;
                     int win = matchScore * MATCH_BONUS;
                     self.score+=win;
-                    self.description = [NSString stringWithFormat:@"Matched %@ for %d points",[cardsToMatch componentsJoinedByString:@", "] , win];
+                    self.description = [NSString stringWithFormat:@"Matched %@,%@ for %d points",card,[cardsToMatch componentsJoinedByString:@", "] , win];
                 
                 } else {
                     SEL faceUp = @selector(setFaceUp:);
                     [cardsToMatch makeObjectsPerformSelector:faceUp withObject:NO];
                     int lose = MISMATCH_PENALTY;
                     self.score -= lose;
-                    self.description = [NSString stringWithFormat:@"%@ didn't match! %d points penalty!", [cardsToMatch componentsJoinedByString:@", "], lose];
+                    self.description = [NSString stringWithFormat:@"%@,%@ didn't match! %d points penalty!",card,[cardsToMatch componentsJoinedByString:@", "], lose];
                 }
             }
             
