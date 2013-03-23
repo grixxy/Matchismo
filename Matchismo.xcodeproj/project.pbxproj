@@ -23,6 +23,7 @@
 		F3511EB016E9B94F003A1917 /* Deck.m in Sources */ = {isa = PBXBuildFile; fileRef = F3511EAF16E9B94F003A1917 /* Deck.m */; };
 		F3511EB316E9C153003A1917 /* PlayingCard.m in Sources */ = {isa = PBXBuildFile; fileRef = F3511EB216E9C153003A1917 /* PlayingCard.m */; };
 		F3511EB616E9C54A003A1917 /* PlayingCardDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = F3511EB516E9C54A003A1917 /* PlayingCardDeck.m */; };
+		F3ABC93616FD6D1B005B9DBB /* Untitled.png in Resources */ = {isa = PBXBuildFile; fileRef = F3ABC93516FD6D1B005B9DBB /* Untitled.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		F3511EB216E9C153003A1917 /* PlayingCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayingCard.m; path = Model/PlayingCard.m; sourceTree = "<group>"; };
 		F3511EB416E9C54A003A1917 /* PlayingCardDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayingCardDeck.h; path = Model/PlayingCardDeck.h; sourceTree = "<group>"; };
 		F3511EB516E9C54A003A1917 /* PlayingCardDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayingCardDeck.m; path = Model/PlayingCardDeck.m; sourceTree = "<group>"; };
+		F3ABC93516FD6D1B005B9DBB /* Untitled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Untitled.png; path = ../../../../../Untitled.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 		F3511E8E16E9792A003A1917 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F3ABC93516FD6D1B005B9DBB /* Untitled.png */,
 				F3511E8F16E9792A003A1917 /* Matchismo-Info.plist */,
 				F3511E9016E9792A003A1917 /* InfoPlist.strings */,
 				F3511E9316E9792A003A1917 /* main.m */,
@@ -197,6 +200,7 @@
 				F3511E9C16E9792A003A1917 /* Default@2x.png in Resources */,
 				F3511E9E16E9792A003A1917 /* Default-568h@2x.png in Resources */,
 				F3511EA116E9792A003A1917 /* MainStoryboard.storyboard in Resources */,
+				F3ABC93616FD6D1B005B9DBB /* Untitled.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
