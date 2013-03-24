@@ -44,6 +44,8 @@
         Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
         if(!card.isFaceUp){
          [cardButton setImage:cardBackImage forState:UIControlStateNormal];
+            UIEdgeInsets insets = UIEdgeInsetsMake(2,2,3,3);
+            cardButton.imageEdgeInsets = insets;
         } else {
          [cardButton setImage:nil forState:UIControlStateNormal];
         }
