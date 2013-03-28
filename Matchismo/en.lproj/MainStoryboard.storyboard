@@ -295,7 +295,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Untitled.png" width="16" height="16"/>
+        <image name="Untitled.png" width="191" height="250"/>
     </resources>
     <classes>
         <class className="CardGameViewController" superclassName="UIViewController">
