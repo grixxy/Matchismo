@@ -79,6 +79,10 @@
     
 }
 
+-(void)viewDidLoad{
+    [super viewDidLoad];
+    [self updateUI];
+}
 
 
 
