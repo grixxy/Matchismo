@@ -12,30 +12,19 @@
 #import "CardMatchingGame.h"
 
 @interface CardGameViewController ()
-@property (weak, nonatomic) IBOutlet UISegmentedControl *cardSelector;
-@property (weak, nonatomic) IBOutlet UILabel *lastFlipLabel;
-@property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
-@property (nonatomic) int flipCounts;
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
-@property (strong, nonatomic) CardMatchingGame *game;
-@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+
 @end
 
 @implementation CardGameViewController
-- (IBAction)dealButton:(id)sender {
-    self.game = nil;
-    self.flipCounts = 0;
-    self.cardSelector.enabled = YES;
-    [self updateUI];
-}
 
 
 -(CardMatchingGame *) game{
-    if(!_game){
-        NSUInteger complexity = self.cardSelector.selectedSegmentIndex==0?2:3;
-        _game = [[CardMatchingGame alloc] initWithCardCount:self.cardButtons.count usingDeck:[[PlayingCardDeck alloc] init] withComplexity:complexity];
+    if(![super game]){
+        NSUInteger complexity = 2;
+        CardMatchingGame * l_game = [[CardMatchingGame alloc] initWithCardCount:self.cardButtons.count usingDeck:[[PlayingCardDeck alloc] init] withComplexity:complexity];
+        [super setGame: l_game];
     }
-    return _game;
+    return [super game];
 }
 
 -(void) updateUI{
@@ -58,30 +47,6 @@
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     self.lastFlipLabel.text = self.game.description;
 
-}
-
-
--(void) setCardButtons:(NSArray *)cardButtons{
-    _cardButtons = cardButtons;
-}
-
--(void) setFlipCounts:(int)flipCounts
-{
-    _flipCounts = flipCounts;
-    self.flipsLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCounts];
-}
-
-- (IBAction)flipCard:(UIButton *)sender {
-    [self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
-    self.flipCounts++;
-    self.cardSelector.enabled=NO;
-    [self updateUI];
-    
-}
-
--(void)viewDidLoad{
-    [super viewDidLoad];
-    [self updateUI];
 }
 
 
