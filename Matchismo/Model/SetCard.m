@@ -9,15 +9,16 @@
 #import "SetCard.h"
 
 @implementation SetCard
--(NSArray*) allColors{
++(NSArray*) allColors{
     return @[@"red",@"green",@"purple"];
 }
--(NSArray*) allSymbols{
++(NSArray*) allSymbols{
     return @[@"▲", @"■", @"●"];
 }
--(uint) maxNumber{return 3;}
--(uint) minNumber{return 1;};
--(NSArray*) allChadings{
++(NSArray*) allNumbers{
+    return [[NSArray alloc] initWithObjects:[[NSNumber alloc]initWithInt:1],[[NSNumber alloc]initWithInt:2],[[NSNumber alloc]initWithInt:3], nil];
+ }
++(NSArray*) allShadings{
  return @[@"solid", @"open", @"striped"];
 }
 
@@ -26,13 +27,13 @@
     NSMutableSet *uniqueColors = [[NSMutableSet alloc] initWithObjects:self.color, nil];
     NSMutableSet *uniqueSymbols = [[NSMutableSet alloc] initWithObjects:self.symbol, nil];
     NSMutableSet *uniqueNumbers = [[NSMutableSet alloc] initWithObjects:self.number, nil];
-    NSMutableSet *uniqueChadings = [[NSMutableSet alloc] initWithObjects:self.chading, nil];
+    NSMutableSet *uniqueChadings = [[NSMutableSet alloc] initWithObjects:self.shading, nil];
     
     for(SetCard *otherCard in otherCards){
      [uniqueColors addObject:otherCard.color];
      [uniqueSymbols addObject:otherCard.symbol];
      [uniqueNumbers addObject:otherCard.number];
-     [uniqueChadings addObject:otherCard.chading];
+     [uniqueChadings addObject:otherCard.shading];
     }
     int numberOfCardsInSet = otherCards.count+1;
     if(uniqueColors.count!=1 && uniqueColors.count!=numberOfCardsInSet){

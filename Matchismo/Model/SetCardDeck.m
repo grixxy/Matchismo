@@ -13,7 +13,25 @@
 
 - (id)init {
     self = [super init];
+    if (self) {
+        for(NSNumber* number in [SetCard allNumbers]){
+            for(NSString* color in [SetCard allColors]){
+                for(NSString * symbol in [SetCard allSymbols]){
+                    for(NSString* shading in [SetCard allShadings]){
+                        SetCard *card = [[SetCard alloc] init];
+                        card.number = number;
+                        card.color = color;
+                        card.symbol = symbol;
+                        card.shading = shading;
+                        [self addCard:card atTop:YES];
+                    }
+                }
+            }
+        }
+        
+    }
     return self;
 }
+
 
 @end
