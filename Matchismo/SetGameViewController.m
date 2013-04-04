@@ -9,6 +9,7 @@
 #import "SetGameViewController.h"
 #import "CardMatchingGame.h"
 #import "SetCardDeck.h"
+#import "SetCard.h"
 
 @interface SetGameViewController ()
 
@@ -28,35 +29,75 @@
 }
 
 -(void) updateUI{
-    UIImage *cardBackImage = [UIImage imageNamed:@"Untitled.png"];
     for(UIButton *cardButton in self.cardButtons){
         Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
-        if(!card.isFaceUp){
-            [cardButton setImage:cardBackImage forState:UIControlStateNormal];
-            UIEdgeInsets insets = UIEdgeInsetsMake(2,2,3,3);
-            cardButton.imageEdgeInsets = insets;
+        if(card.isFaceUp){
+            //face up
+            cardButton.backgroundColor = [UIColor grayColor];
+            
         } else {
-            [cardButton setImage:nil forState:UIControlStateNormal];
+            //face down
+            cardButton.backgroundColor = [UIColor whiteColor];
         }
-        [cardButton setTitle:card.contents forState:UIControlStateSelected];
-        [cardButton setTitle:card.contents forState:UIControlStateSelected|UIControlStateDisabled];
+        
+        //[cardButton setTitle:card.contents forState:UIControlStateSelected];
+        //[cardButton setTitle:card.contents forState:UIControlStateSelected|UIControlStateDisabled];
         cardButton.selected = card.isFaceUp;
         cardButton.enabled = !card.isUnplayable;
         cardButton.alpha = card.isUnplayable ? 0.3 : 1.0;
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     self.lastFlipLabel.text = self.game.description;
+    [self updateTextForButtons];
+}
+
+-(void) updateTextForButtons{
+    for(UIButton *cardButton in self.cardButtons){
+        SetCard *card = (SetCard*)[self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
+        NSAttributedString* cardText = [self getUIStringForCard:card];
+        
+        [cardButton setAttributedTitle:cardText forState:UIControlStateSelected];
+        [cardButton setAttributedTitle:cardText forState:UIControlStateNormal];
+        [cardButton setAttributedTitle:cardText forState:UIControlStateSelected|UIControlStateDisabled];
+    }
     
 }
 
+-(NSAttributedString*) getUIStringForCard:(SetCard* )card{
+    NSString *cardString=@"";
+    //symbol
+    //number
+    for(int i=0;i<[card.number intValue];i++){
+       cardString = [cardString stringByAppendingString:card.symbol];
+    }
+    NSRange whole_range = NSMakeRange(0, cardString.length);
+    //color red green purple
+    NSMutableAttributedString* str = [[NSMutableAttributedString alloc] initWithString:cardString];
+    if([@"red" isEqualToString:card.color]){
+      [str addAttribute:NSStrokeColorAttributeName value:[UIColor redColor] range:whole_range];
+    } else if ([@"green" isEqualToString:card.color]){
+        [str addAttribute:NSStrokeColorAttributeName value:[UIColor greenColor] range:whole_range];
+    } else if ([@"purple" isEqualToString:card.color]){
+        [str addAttribute:NSStrokeColorAttributeName value:[UIColor purpleColor] range:whole_range];
+    }
+   
+    if([@"solid" isEqualToString:card.shading]){
+        //[str addAttribute:NSStrokeColorAttributeName value:[UIColor redColor] range:whole_range];
+        id color = [str attribute:NSStrokeColorAttributeName atIndex:0 effectiveRange:NULL];
+        [str addAttribute:NSForegroundColorAttributeName value:color range:whole_range];
+    } else if ([@"open" isEqualToString:card.shading]){
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:whole_range];
+    } else if ([@"striped" isEqualToString:card.shading]){
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:whole_range];
+    }
+    [str addAttribute:NSStrokeWidthAttributeName value:[[NSNumber alloc]initWithFloat:-10.0] range:whole_range];
+    //[str addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:whole_range];
+    
+    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:15.0] range:whole_range];
 
-
-
-
-
-
-
-
+    return str;
+    
+}
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
