@@ -45,10 +45,23 @@
         cardButton.alpha = card.isUnplayable ? 0.3 : 1.0;
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-    self.lastFlipLabel.text = self.game.description;
-
+    self.lastFlipLabel.text = [self textForLabelWithResults: self.game.lastActionResult];
 }
 
-
+-(NSString*) textForLabelWithResults:(ActionResult*) results {
+    
+    NSString* str;
+    if(!results.cards){
+        str = @"";
+    } else if(results.scoreChange>0){
+     str = [NSString stringWithFormat:@"Matched %@ for %d points",[results.cards componentsJoinedByString:@", "] , results.scoreChange];
+    } else if(results.scoreChange<0){
+        str = [NSString stringWithFormat:@"%@ didn't match! %d points penalty!",[results.cards componentsJoinedByString:@", "], results.scoreChange];
+    } else {
+     str = [NSString stringWithFormat:@"Flipped up %@ ", [results.cards lastObject] ];
+    }
+    return str;
+    
+}
 
 @end

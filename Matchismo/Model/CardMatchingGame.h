@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Deck.h"
+#import "ActionResult.h"
 
 @interface CardMatchingGame : NSObject
 
@@ -19,6 +20,7 @@
 
 
 @property(nonatomic, readonly) int score;
+@property(nonatomic, readonly) ActionResult* lastActionResult;
 
 
 @end

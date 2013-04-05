@@ -7,6 +7,7 @@
 //
 
 #import "CardMatchingGame.h"
+#import "ActionResult.h"
 
 
 @interface CardMatchingGame()
@@ -14,6 +15,8 @@
 @property(nonatomic) int score;
 @property(nonatomic) NSString* description;
 @property(nonatomic) NSUInteger numberOfCardsToCompare;
+@property(nonatomic) ActionResult* lastActionResult;
+
 @end
 
 @implementation CardMatchingGame
@@ -23,6 +26,10 @@
     return _cards;
 }
 
+-(ActionResult*) lastActionResult{
+    if(!_lastActionResult)_lastActionResult = [[ActionResult alloc] init];
+    return _lastActionResult;
+}
 
 -(id) initWithCardCount:(NSUInteger) count usingDeck:(Deck *)deck withComplexity:(NSUInteger) numberOfCardsToCompare {
     self = [super init];
@@ -51,19 +58,23 @@
 #define MISMATCH_PENALTY 2;
 #define FLIP_COST 1;
 
+
 -(void)flipCardAtIndex:(NSUInteger) index{
     Card *card = [self cardAtIndex:index];
     NSMutableArray *cardsToMatch = [[NSMutableArray alloc] init];
     if(!card.isUnplayable){
         if(!card.isFaceUp){
             self.score -= FLIP_COST;
-            self.description = [NSString stringWithFormat:@"Flipped up %@ ", card.contents ];
+            self.lastActionResult.cards = @[card];
+            self.lastActionResult.scoreChange = 0;
             
             for(Card* otherCard in self.cards){
                 if(otherCard.isFaceUp && !otherCard.isUnplayable) {
                     [cardsToMatch addObject:otherCard];
                 }
             }
+            NSMutableArray* allCards =[[NSMutableArray alloc]initWithArray:cardsToMatch];
+            [allCards addObject:card];
             
             if(cardsToMatch.count==self.numberOfCardsToCompare-1){
                 //time to count score!!!
@@ -75,14 +86,17 @@
                     card.unplayable = YES;
                     int win = matchScore * MATCH_BONUS;
                     self.score+=win;
-                    self.description = [NSString stringWithFormat:@"Matched %@,%@ for %d points",card,[cardsToMatch componentsJoinedByString:@", "] , win];
+                    self.lastActionResult.cards = allCards;
+                    self.lastActionResult.scoreChange = win;
                 
                 } else {
                     SEL faceUp = @selector(setFaceUp:);
                     [cardsToMatch makeObjectsPerformSelector:faceUp withObject:NO];
                     int lose = MISMATCH_PENALTY;
                     self.score -= lose;
-                    self.description = [NSString stringWithFormat:@"%@,%@ didn't match! %d points penalty!",card,[cardsToMatch componentsJoinedByString:@", "], lose];
+                    self.lastActionResult.cards = allCards;
+                    self.lastActionResult.scoreChange = -lose;
+                    
                 }
             }
             

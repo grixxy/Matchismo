@@ -47,7 +47,7 @@
         cardButton.alpha = card.isUnplayable ? 0.3 : 1.0;
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-    self.lastFlipLabel.text = self.game.description;
+    self.lastFlipLabel.attributedText = [self textForLabelWithResults:self.game.lastActionResult];
     [self updateTextForButtons];
 }
 
@@ -61,6 +61,46 @@
         [cardButton setAttributedTitle:cardText forState:UIControlStateSelected|UIControlStateDisabled];
     }
     
+}
+
+
+-(NSAttributedString*) textForLabelWithResults:(ActionResult*) results {
+    
+    NSAttributedString* str;
+    if(!results.cards){
+        str = [[NSAttributedString alloc] initWithString:@""];
+    } else if(results.scoreChange>0){
+        NSMutableAttributedString * t_str = [[NSMutableAttributedString alloc] initWithString:@"Matched "];
+        [t_str appendAttributedString:[self joinCardStrings:results.cards]];
+        NSString * t_str2 = [NSString stringWithFormat:@" for %d points",results.scoreChange];
+        [t_str appendAttributedString:[[NSAttributedString alloc]initWithString:t_str2]];
+        str = t_str;
+    } else if(results.scoreChange<0){
+        NSMutableAttributedString * t_str = [[NSMutableAttributedString alloc] init];
+        [t_str appendAttributedString:[self joinCardStrings:results.cards]];
+        NSString * t_str2 = [NSString stringWithFormat:@" didn't match %d points penalty",results.scoreChange];
+        [t_str appendAttributedString:[[NSAttributedString alloc]initWithString:t_str2]];
+        str = t_str;
+    } else {
+        NSMutableAttributedString * t_str = [[NSMutableAttributedString alloc] initWithString:@"Flipped up "];
+        [t_str appendAttributedString:[self joinCardStrings:results.cards]];
+        str = t_str;
+    }
+    return str;
+    
+}
+
+-(NSAttributedString*) joinCardStrings:(NSArray*)cards{
+    NSMutableAttributedString * str = [[NSMutableAttributedString alloc] init];
+    for(SetCard *card in cards){
+        [str appendAttributedString:[self getUIStringForCard:card]];
+        if(cards.lastObject!=card){
+           [str appendAttributedString:[[NSAttributedString alloc]initWithString:@","]];
+        }
+    }
+    
+    
+    return str;
 }
 
 -(NSAttributedString*) getUIStringForCard:(SetCard* )card{
