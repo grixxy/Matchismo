@@ -259,7 +259,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Card Game" id="rvF-v7-fgn"/>
+                    <tabBarItem key="tabBarItem" title="Card Game" image="cardIcon.png" id="rvF-v7-fgn"/>
                     <connections>
                         <outlet property="flipsLabel" destination="Wfa-mv-ghM" id="2QK-0A-MRr"/>
                         <outlet property="lastFlipLabel" destination="cZ4-ns-Qps" id="RVT-3g-lvM"/>
@@ -708,7 +708,27 @@
     </scenes>
     <resources>
         <image name="Untitled.png" width="191" height="250"/>
+        <image name="cardIcon.png" width="30" height="32"/>
     </resources>
+    <classes>
+        <class className="CardGameViewController" superclassName="GameViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CardGameViewController.h"/>
+        </class>
+        <class className="GameViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GameViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="dealButton:"/>
+                <relationship kind="action" name="flipCard:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="flipsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="lastFlipLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="scoreLabel" candidateClass="UILabel"/>
+                <relationship kind="outletCollection" name="cardButtons" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="SetGameViewController" superclassName="GameViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SetGameViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

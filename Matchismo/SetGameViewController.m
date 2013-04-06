@@ -120,7 +120,6 @@
     }
    
     if([@"solid" isEqualToString:card.shading]){
-        //[str addAttribute:NSStrokeColorAttributeName value:[UIColor redColor] range:whole_range];
         id color = [str attribute:NSStrokeColorAttributeName atIndex:0 effectiveRange:NULL];
         [str addAttribute:NSForegroundColorAttributeName value:color range:whole_range];
     } else if ([@"open" isEqualToString:card.shading]){
