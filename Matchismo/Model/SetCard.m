@@ -15,6 +15,11 @@
 +(NSArray*) allSymbols{
     return @[@"▲", @"■", @"●"];
 }
+
++(NSString*)gameName{
+    return @"SetGame";
+}
+
 +(NSArray*) allNumbers{
     return [[NSArray alloc] initWithObjects:[[NSNumber alloc]initWithInt:1],[[NSNumber alloc]initWithInt:2],[[NSNumber alloc]initWithInt:3], nil];
  }

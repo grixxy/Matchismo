@@ -10,6 +10,7 @@
 #import "Deck.h"
 #import "PlayingCardDeck.h"
 #import "CardMatchingGame.h"
+#import "PlayingCard.h"
 
 @interface CardGameViewController ()
 
@@ -26,6 +27,14 @@
     }
     return [super game];
 }
+
+-(GameResult*) gameResult {
+    if(!super.gameResult){
+        super.gameResult = [[GameResult alloc] initWithGameName:[PlayingCard gameName]];
+    }
+    return super.gameResult;
+}
+
 
 -(void) updateUI{
     UIImage *cardBackImage = [UIImage imageNamed:@"Untitled.png"];

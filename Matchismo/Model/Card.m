@@ -10,5 +10,5 @@
 
 @implementation Card
 -(int) match:(NSArray *)otherCards{return 0;}
-
++(NSString*)gameName{return nil;}
 @end

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CardMatchingGame.h"
+#import "GameResult.h"
 
 @interface GameViewController : UIViewController
 @property (nonatomic, readwrite, weak) IBOutlet UILabel *lastFlipLabel;
@@ -16,5 +17,6 @@
 @property (nonatomic, readwrite, strong) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (nonatomic, readwrite, strong) CardMatchingGame *game;
 @property (nonatomic, readwrite, weak) IBOutlet UILabel *scoreLabel;
+@property(strong, nonatomic) GameResult * gameResult;
 
 @end

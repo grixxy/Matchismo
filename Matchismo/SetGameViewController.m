@@ -28,6 +28,15 @@
     return [super game];
 }
 
+
+-(GameResult*) gameResult {
+    if(!super.gameResult){
+        super.gameResult = [[GameResult alloc] initWithGameName:[SetCard gameName]];
+    }
+    return super.gameResult;
+}
+
+
 -(void) updateUI{
     for(UIButton *cardButton in self.cardButtons){
         Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];

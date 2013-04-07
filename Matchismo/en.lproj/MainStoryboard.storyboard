@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D76" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="HBM-9A-eKm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="HBM-9A-eKm">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -299,11 +299,87 @@
                     <connections>
                         <segue destination="2" kind="relationship" relationship="viewControllers" id="Y40-k1-cpX"/>
                         <segue destination="ZbF-rU-sOO" kind="relationship" relationship="viewControllers" id="bKO-WX-cev"/>
+                        <segue destination="Tw3-29-nbX" kind="relationship" relationship="viewControllers" id="GEy-vX-PFl"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3k1-ZD-25Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="15" y="-191"/>
+        </scene>
+        <!--Game Result View Controller - Score-->
+        <scene sceneID="nDA-Lx-CQd">
+            <objects>
+                <viewController title="Score" id="Tw3-29-nbX" customClass="GameResultViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="HS8-KT-0uv">
+                        <rect key="frame" x="0.0" y="20" width="320" height="411"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Score: 25(1/22/13 4:00 pm, 35s)" id="MAk-uo-I72">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="309"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="oph-HQ-k0z">
+                                <rect key="frame" x="89" y="317" width="143" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Card"/>
+                                    <segment title="Set"/>
+                                </segments>
+                                <connections>
+                                    <action selector="selectorChange:" destination="Tw3-29-nbX" eventType="valueChanged" id="Tfj-Z0-wzW"/>
+                                </connections>
+                            </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="VYj-6e-0GB">
+                                <rect key="frame" x="13" y="368" width="80" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="By Date">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="HFo-VH-YgU">
+                                <rect key="frame" x="101" y="368" width="90" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="By Score">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vMz-2i-5dG">
+                                <rect key="frame" x="199" y="368" width="110" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="By Duration">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Score" id="uOM-pj-fFE"/>
+                    <connections>
+                        <outlet property="display" destination="MAk-uo-I72" id="k8m-0Z-0Yt"/>
+                        <outlet property="gameType" destination="oph-HQ-k0z" id="avA-hg-v71"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RaT-WL-Dkc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="446" y="-255"/>
         </scene>
         <!--Set Game View Controller - Set Game-->
         <scene sceneID="tX9-QT-OlS">
@@ -670,7 +746,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Set Game" id="29r-Od-6m2"/>
+                    <tabBarItem key="tabBarItem" title="Set Game" image="setgameicon.png" id="29r-Od-6m2"/>
                     <connections>
                         <outlet property="flipsLabel" destination="GhF-KQ-NcB" id="v6l-pR-6wO"/>
                         <outlet property="lastFlipLabel" destination="g99-Hd-ixv" id="mwv-zr-6IM"/>
@@ -703,16 +779,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nJe-ya-zm4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="526" y="-240"/>
+            <point key="canvasLocation" x="75" y="-182"/>
         </scene>
     </scenes>
     <resources>
         <image name="Untitled.png" width="191" height="250"/>
-        <image name="cardIcon.png" width="30" height="32"/>
+        <image name="cardIcon.png" width="35" height="35"/>
+        <image name="setgameicon.png" width="35" height="35"/>
     </resources>
     <classes>
         <class className="CardGameViewController" superclassName="GameViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CardGameViewController.h"/>
+        </class>
+        <class className="GameResultViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GameResultViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="selectorChange:"/>
+                <relationship kind="outlet" name="display" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="gameType" candidateClass="UISegmentedControl"/>
+            </relationships>
         </class>
         <class className="GameViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/GameViewController.h"/>

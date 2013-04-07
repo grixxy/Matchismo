@@ -8,18 +8,24 @@
 
 #import "GameViewController.h"
 #import "CardMatchingGame.h"
+#import "GameResult.h"
+
 
 @interface GameViewController ()
 @property (nonatomic) int flipCounts;
+
+
 @end
 
 @implementation GameViewController
 
 - (IBAction)dealButton:(id)sender {
     self.game = nil;
+    self.gameResult = nil;
     self.flipCounts = 0;
     [self updateUI];
 }
+
 
 
 -(void) updateUI{}
@@ -39,6 +45,7 @@
     [self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
     self.flipCounts++;
     [self updateUI];
+    self.gameResult.score = self.game.score;
     
 }
 
