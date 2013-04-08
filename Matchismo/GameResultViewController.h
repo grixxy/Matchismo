@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface GameResultViewController : UIViewController
+
 @property (weak, nonatomic) IBOutlet UISegmentedControl *gameType;
 
 @end

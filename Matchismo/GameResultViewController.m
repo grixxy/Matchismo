@@ -13,6 +13,7 @@
 
 @interface GameResultViewController ()
 @property (weak, nonatomic) IBOutlet UITextView *display;
+@property (strong, nonatomic)NSString* sortOrder;
 
 @end
 
@@ -25,6 +26,24 @@
 - (IBAction)selectorChange:(id)sender {
     [self updateUI];
 }
+- (IBAction)sortByDate:(id)sender {
+    self.sortOrder = @"date";
+}
+- (IBAction)sortByScore:(id)sender {
+   self.sortOrder = @"score"; 
+}
+- (IBAction)sortByDuration:(id)sender {
+    self.sortOrder = @"duration";
+}
+
+-(NSString*)sortOrder{
+    if(!_sortOrder){
+        _sortOrder = @"date";
+    }
+    return _sortOrder;
+}
+
+
 
 -(void)updateUI{
 
