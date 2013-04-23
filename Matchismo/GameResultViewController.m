@@ -28,17 +28,20 @@
 }
 - (IBAction)sortByDate:(id)sender {
     self.sortOrder = @"date";
+    [self updateUI];
 }
 - (IBAction)sortByScore:(id)sender {
-   self.sortOrder = @"score"; 
+   self.sortOrder = @"score";
+    [self updateUI];
 }
 - (IBAction)sortByDuration:(id)sender {
     self.sortOrder = @"duration";
+    [self updateUI];
 }
 
 -(NSString*)sortOrder{
     if(!_sortOrder){
-        _sortOrder = @"date";
+        _sortOrder = @"";
     }
     return _sortOrder;
 }
@@ -49,13 +52,13 @@
 
     NSString* gameResultToDisplay;
     if([self.gameType selectedSegmentIndex]){
-        gameResultToDisplay = [PlayingCard gameName];
-    } else {
         gameResultToDisplay = [SetCard gameName];
+    } else {
+        gameResultToDisplay = [PlayingCard  gameName];
     }
     NSString* displayText = [gameResultToDisplay stringByAppendingString:@"\n"];
-    
-    for(GameResult *result in [GameResult allGameResultsForGame:gameResultToDisplay]){
+  
+    for(GameResult *result in [GameResult allGameResultsForGame:gameResultToDisplay sortedBy:self.sortOrder]){
         displayText = [displayText stringByAppendingFormat:@"Score %d (%@, %0g)\n", result.score, result.end, round(result.duration)];
     }
     self.display.text = displayText;

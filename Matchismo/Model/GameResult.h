@@ -15,4 +15,5 @@
 @property (nonatomic)int score;
 -(id) initWithGameName:(NSString*)gameName;
 +(NSArray*) allGameResultsForGame:(NSString*)gameName;
++(NSArray*) allGameResultsForGame:(NSString*)gameName sortedBy:(NSString*) sortOrder;
 @end

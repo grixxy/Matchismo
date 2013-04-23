@@ -33,6 +33,8 @@
 		F3ABC9491708BC21005B9DBB /* SetCard.m in Sources */ = {isa = PBXBuildFile; fileRef = F3ABC9481708BC20005B9DBB /* SetCard.m */; };
 		F3ABC94C170E15D3005B9DBB /* ActionResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F3ABC94B170E15D3005B9DBB /* ActionResult.m */; };
 		F3ABC94E170FAAA7005B9DBB /* cardIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = F3ABC94D170FAAA7005B9DBB /* cardIcon.png */; };
+		F3EAE72117263B09001A7AEE /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EAE72017263B09001A7AEE /* settings.png */; };
+		F3EAE72317263CB0001A7AEE /* score.png in Resources */ = {isa = PBXBuildFile; fileRef = F3EAE72217263CB0001A7AEE /* score.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +81,8 @@
 		F3ABC94A170E15D3005B9DBB /* ActionResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionResult.h; path = Model/ActionResult.h; sourceTree = "<group>"; };
 		F3ABC94B170E15D3005B9DBB /* ActionResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionResult.m; path = Model/ActionResult.m; sourceTree = "<group>"; };
 		F3ABC94D170FAAA7005B9DBB /* cardIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardIcon.png; sourceTree = "<group>"; };
+		F3EAE72017263B09001A7AEE /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
+		F3EAE72217263CB0001A7AEE /* score.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = score.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +149,8 @@
 		F3511E8E16E9792A003A1917 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F3EAE72217263CB0001A7AEE /* score.png */,
+				F3EAE72017263B09001A7AEE /* settings.png */,
 				CEFF86BC1710C81400A14D29 /* setgameicon.png */,
 				F3ABC94D170FAAA7005B9DBB /* cardIcon.png */,
 				F3ABC9391703F4E5005B9DBB /* Untitled.png */,
@@ -244,6 +250,8 @@
 				F3ABC93A1703F4E5005B9DBB /* Untitled.png in Resources */,
 				F3ABC94E170FAAA7005B9DBB /* cardIcon.png in Resources */,
 				CEFF86BD1710C81400A14D29 /* setgameicon.png in Resources */,
+				F3EAE72117263B09001A7AEE /* settings.png in Resources */,
+				F3EAE72317263CB0001A7AEE /* score.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

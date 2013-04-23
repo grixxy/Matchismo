@@ -29,6 +29,33 @@
     return allGameResults;
 }
 
++(NSArray*) allGameResultsForGame:(NSString*) gameName sortedBy:(NSString*)sortOrder{
+    NSMutableArray * gameResults = [[GameResult allGameResultsForGame:gameName] mutableCopy];
+    if([sortOrder isEqualToString:@""]) return gameResults;
+    SEL sorter = NULL;
+    if([sortOrder isEqualToString:@"date"]){
+        sorter = @selector(compareByDate:);
+    } else if([sortOrder isEqualToString:@"score"]){
+        sorter = @selector(compareByScore:);
+    }else if ([sortOrder isEqualToString:@"duration"]){
+        sorter = @selector(compareByDuration:);
+    }
+    NSArray *sortedArray = [gameResults sortedArrayUsingSelector:sorter];
+    return sortedArray;
+}
+
+- (NSComparisonResult)compareByDate:(GameResult *)otherObject {
+    return [self.start compare:otherObject.start];
+}
+
+- (NSComparisonResult)compareByScore:(GameResult *)otherObject {
+    return [[NSNumber numberWithInt:self.score] compare: [NSNumber numberWithInt:otherObject.score]];
+}
+
+- (NSComparisonResult)compareByDuration:(GameResult *)otherObject {
+    return [[NSNumber numberWithInt:self.duration] compare:[NSNumber numberWithInt:otherObject.duration]];
+}
+
 -(id) initFromPropertyList:(id)plist{
     self = [self init];
     if(self){
