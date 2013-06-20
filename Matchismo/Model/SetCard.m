@@ -24,7 +24,7 @@
     return [[NSArray alloc] initWithObjects:[[NSNumber alloc]initWithInt:1],[[NSNumber alloc]initWithInt:2],[[NSNumber alloc]initWithInt:3], nil];
  }
 +(NSArray*) allShadings{
- return @[@"solid", @"open", @"striped"];
+ return @[@"solid", @"open", @"stripe"];
 }
 
 -(int) match:(NSArray *)otherCards{

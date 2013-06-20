@@ -10,6 +10,7 @@
 #import "CardMatchingGame.h"
 #import "SetCardDeck.h"
 #import "SetCard.h"
+#import "SetCardCollectionViewCell.h"
 
 @interface SetGameViewController ()
 
@@ -22,7 +23,7 @@
 -(CardMatchingGame *) game{
     if(![super game]){
         NSUInteger complexity = 3;
-        CardMatchingGame * l_game = [[CardMatchingGame alloc] initWithCardCount:self.cardButtons.count usingDeck:[[SetCardDeck alloc] init] withComplexity:complexity];
+        CardMatchingGame * l_game = [[CardMatchingGame alloc] initWithCardCount: [self.startingCardCount integerValue] usingDeck:[[SetCardDeck alloc] init] withComplexity:complexity];
         [super setGame: l_game];
     }
     return [super game];
@@ -37,39 +38,65 @@
 }
 
 
--(void) updateUI{
-    for(UIButton *cardButton in self.cardButtons){
-        Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
-        if(card.isFaceUp){
-            //face up
-            cardButton.backgroundColor = [UIColor grayColor];
-            
-        } else {
-            //face down
-            cardButton.backgroundColor = [UIColor whiteColor];
-        }
-        
-        cardButton.selected = card.isFaceUp;
-        cardButton.enabled = !card.isUnplayable;
-        cardButton.alpha = card.isUnplayable ? 0.3 : 1.0;
+#define DEFAULT_SET_CARDS 12
+-(NSNumber*) startingCardCount {
+    if(!super.startingCardCount){
+        super.startingCardCount = [[NSNumber alloc] initWithInt:DEFAULT_SET_CARDS];
     }
-    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-    self.lastFlipLabel.attributedText = [self textForLabelWithResults:self.game.lastActionResult];
-    [self updateTextForButtons];
+    return super.startingCardCount;
 }
 
--(void) updateTextForButtons{
-    for(UIButton *cardButton in self.cardButtons){
-        SetCard *card = (SetCard*)[self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
-        NSAttributedString* cardText = [self getUIStringForCard:card];
-        
-        [cardButton setAttributedTitle:cardText forState:UIControlStateSelected];
-        [cardButton setAttributedTitle:cardText forState:UIControlStateNormal];
-        [cardButton setAttributedTitle:cardText forState:UIControlStateSelected|UIControlStateDisabled];
+
+
+-(void) updateUI{
+    [super updateUI];
+    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+    self.lastFlipLabel.attributedText = [self textForLabelWithResults:self.game.lastActionResult];
+  
+}
+
+-(void) updateCell:(UICollectionViewCell *)cell usingCard:(Card*) card{
+    if([cell isKindOfClass:[SetCardCollectionViewCell class]]){
+        SetCardView* setCardView = ((SetCardCollectionViewCell*)cell).setCardView;
+        if([card isKindOfClass:[SetCard class]]){
+            SetCard* setCard = (SetCard*) card;
+            setCardView.shading = setCard.shading;
+            setCardView.color = [self mapColor:setCard.color];
+            setCardView.shape = [self mapShape:setCard.symbol];
+            setCardView.numberOfShapes = [setCard.number intValue];
+            setCardView.alpha = setCard.isUnplayable ? 0.3: 1.0;
+        }
     }
     
 }
 
+
+-(UIColor*) mapColor:(NSString*)color{
+    if([color isEqualToString:@"green"]){
+        return [UIColor blueColor];
+    }
+    if([color isEqualToString:@"red"]){
+        return [UIColor redColor];
+    }
+    if([color isEqualToString:@"purple"]){
+        return [UIColor purpleColor];
+    }
+    return NULL;
+}
+
+
+-(NSString*) mapShape:(NSString*)shape{
+    if([shape isEqualToString:@"▲"]){
+        return @"squiggle";
+    }
+    if([shape isEqualToString:@"●"]){
+        return @"oval";
+    }
+    if([shape isEqualToString:@"■"]){
+        return @"diamond";
+    }
+    return nil;
+}
 
 -(NSAttributedString*) textForLabelWithResults:(ActionResult*) results {
     
@@ -133,7 +160,7 @@
         [str addAttribute:NSForegroundColorAttributeName value:color range:whole_range];
     } else if ([@"open" isEqualToString:card.shading]){
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:whole_range];
-    } else if ([@"striped" isEqualToString:card.shading]){
+    } else if ([@"stripe" isEqualToString:card.shading]){
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:whole_range];
     }
     [str addAttribute:NSStrokeWidthAttributeName value:[[NSNumber alloc]initWithFloat:-10.0] range:whole_range];
@@ -143,6 +170,10 @@
 
     return str;
     
+}
+
+-(NSString*) reusableIdentifierCellName{
+    return @"SetCard";
 }
 
 

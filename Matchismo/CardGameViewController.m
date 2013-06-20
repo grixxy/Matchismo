@@ -11,21 +11,17 @@
 #import "PlayingCardDeck.h"
 #import "CardMatchingGame.h"
 #import "PlayingCard.h"
+#import "PlayingCardCollectionViewCell.h"
 
 @interface CardGameViewController ()
+
 
 @end
 
 @implementation CardGameViewController
 
-
--(CardMatchingGame *) game{
-    if(![super game]){
-        NSUInteger complexity = 2;
-        CardMatchingGame * l_game = [[CardMatchingGame alloc] initWithCardCount:self.cardButtons.count usingDeck:[[PlayingCardDeck alloc] init] withComplexity:complexity];
-        [super setGame: l_game];
-    }
-    return [super game];
+-(Deck*)createDeck{
+    return [[PlayingCardDeck alloc] init];
 }
 
 -(GameResult*) gameResult {
@@ -35,24 +31,32 @@
     return super.gameResult;
 }
 
+#define DEFAULT_PLAY_CARDS 22
+-(NSNumber*) startingCardCount {
+    if(!super.startingCardCount){
+        super.startingCardCount = [[NSNumber alloc] initWithInt:DEFAULT_PLAY_CARDS];
+    }
+    return super.startingCardCount;
+}
+
+-(void) updateCell:(UICollectionViewCell *)cell usingCard:(Card*) card{
+    if([cell isKindOfClass:[PlayingCardCollectionViewCell class]]){
+        PlayingCardView* playingCardView = ((PlayingCardCollectionViewCell*)cell).playingCardView;
+        if([card isKindOfClass:[PlayingCard class]]){
+            PlayingCard* playingCard = (PlayingCard*) card;
+            playingCardView.rank = playingCard.rank;
+            playingCardView.suit = playingCard.suit;
+            playingCardView.faceUp = playingCard.isFaceUp;
+            playingCardView.alpha = playingCard.isUnplayable ? 0.3: 1.0;
+        }
+    }
+
+}
+
+
 
 -(void) updateUI{
-    UIImage *cardBackImage = [UIImage imageNamed:@"Untitled.png"];
-    for(UIButton *cardButton in self.cardButtons){
-        Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
-        if(!card.isFaceUp){
-         [cardButton setImage:cardBackImage forState:UIControlStateNormal];
-            UIEdgeInsets insets = UIEdgeInsetsMake(2,2,3,3);
-            cardButton.imageEdgeInsets = insets;
-        } else {
-         [cardButton setImage:nil forState:UIControlStateNormal];
-        }
-        [cardButton setTitle:card.contents forState:UIControlStateSelected];
-        [cardButton setTitle:card.contents forState:UIControlStateSelected|UIControlStateDisabled];
-        cardButton.selected = card.isFaceUp;
-        cardButton.enabled = !card.isUnplayable;
-        cardButton.alpha = card.isUnplayable ? 0.3 : 1.0;
-    }
+    [super updateUI];
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     self.lastFlipLabel.text = [self textForLabelWithResults: self.game.lastActionResult];
 }
@@ -72,5 +76,10 @@
     return str;
     
 }
+-(NSString*) reusableIdentifierCellName{
+    return @"PlayingCard";
+}
+
+
 
 @end

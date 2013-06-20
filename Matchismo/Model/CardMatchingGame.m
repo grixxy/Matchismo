@@ -11,7 +11,6 @@
 
 
 @interface CardMatchingGame()
-@property(nonatomic, strong) NSMutableArray* cards;
 @property(nonatomic) int score;
 @property(nonatomic) NSString* description;
 @property(nonatomic) NSUInteger numberOfCardsToCompare;

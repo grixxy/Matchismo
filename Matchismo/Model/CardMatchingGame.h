@@ -18,7 +18,7 @@
 
 -(Card *) cardAtIndex:(NSUInteger) index;
 
-
+@property(nonatomic, strong) NSMutableArray* cards;
 @property(nonatomic, readonly) int score;
 @property(nonatomic, readonly) ActionResult* lastActionResult;
 

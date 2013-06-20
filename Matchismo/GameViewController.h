@@ -14,9 +14,13 @@
 @property (nonatomic, readwrite, weak) IBOutlet UILabel *lastFlipLabel;
 @property (nonatomic, readwrite, weak) IBOutlet UILabel *flipsLabel;
 
-@property (nonatomic, readwrite, strong) IBOutletCollection(UIButton) NSArray *cardButtons;
+
 @property (nonatomic, readwrite, strong) CardMatchingGame *game;
 @property (nonatomic, readwrite, weak) IBOutlet UILabel *scoreLabel;
 @property(strong, nonatomic) GameResult * gameResult;
+@property(strong, nonatomic) NSNumber* startingCardCount;
+-(void) updateCell:(UICollectionViewCell *)cell usingCard:(Card*) card;
+-(Deck*)createDeck;
+-(void)updateUI;
 
 @end
