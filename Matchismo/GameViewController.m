@@ -13,7 +13,7 @@
 
 @interface GameViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 @property (nonatomic) int flipCounts;
-@property (weak, nonatomic) IBOutlet UICollectionView *cardCollectionView;
+
 
 
 
@@ -40,6 +40,7 @@
     self.gameResult = nil;
     self.flipCounts = 0;
     [self updateUI];
+    [self.cardCollectionView reloadData];
 }
 
 
@@ -81,11 +82,11 @@
     [self updateUI];
 }
 
-//----------------------Protocol Implementation
+// protocal implementation
 - (NSInteger)collectionView:(UICollectionView *)asker
      numberOfItemsInSection:(NSInteger)section
 {
-    return [self.startingCardCount integerValue];
+    return [self.game.cards count];
 }
 
 

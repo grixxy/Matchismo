@@ -18,9 +18,17 @@
 
 -(Card *) cardAtIndex:(NSUInteger) index;
 
+-(NSArray*) notPlayableCards;
+
+-(BOOL)drawAdditionalCards:(NSUInteger) numberOfCards;
+
+-(void) deleteCardsAtIndexes:(NSArray*)indexes;
+-(BOOL) deckHasMoreCards;
+
 @property(nonatomic, strong) NSMutableArray* cards;
 @property(nonatomic, readonly) int score;
 @property(nonatomic, readonly) ActionResult* lastActionResult;
+
 
 
 @end

@@ -18,6 +18,7 @@
 @property (nonatomic, readwrite, strong) CardMatchingGame *game;
 @property (nonatomic, readwrite, weak) IBOutlet UILabel *scoreLabel;
 @property(strong, nonatomic) GameResult * gameResult;
+@property (weak, nonatomic) IBOutlet UICollectionView *cardCollectionView;
 @property(strong, nonatomic) NSNumber* startingCardCount;
 -(void) updateCell:(UICollectionViewCell *)cell usingCard:(Card*) card;
 -(Deck*)createDeck;

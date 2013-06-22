@@ -20,7 +20,9 @@
     return _cards;
 }
 
-
+-(NSUInteger)numberOfCardsInDeck{
+    return [self.cards count];
+}
 - (Card *)drawRandomCard
 {
     Card *randomCard = nil;

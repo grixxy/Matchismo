@@ -15,6 +15,7 @@
 @property(nonatomic) NSString* description;
 @property(nonatomic) NSUInteger numberOfCardsToCompare;
 @property(nonatomic) ActionResult* lastActionResult;
+@property(nonatomic) Deck* deck;
 
 @end
 
@@ -32,6 +33,7 @@
 
 -(id) initWithCardCount:(NSUInteger) count usingDeck:(Deck *)deck withComplexity:(NSUInteger) numberOfCardsToCompare {
     self = [super init];
+    self.deck = deck;
     _numberOfCardsToCompare = numberOfCardsToCompare;
     if(self){
         for(int i=0; i<count; i++){
@@ -48,6 +50,24 @@
     return self;
     
 }
+
+-(BOOL)drawAdditionalCards:(NSUInteger) numberOfCards{
+    BOOL noMoreCards = false;
+    for(int i=0;i<numberOfCards;i++){
+        Card* card = [self.deck drawRandomCard];
+        if(card){
+            [self.cards addObject:card];
+        } else {
+            noMoreCards = true;
+        }
+    }
+    return noMoreCards;
+}
+
+-(BOOL) deckHasMoreCards{
+    return [self.deck numberOfCardsInDeck]>0;
+}
+
 
 -(Card *) cardAtIndex:(NSUInteger) index{
     return (index<self.cards.count)? self.cards[index] :nil;
@@ -103,6 +123,33 @@
         card.faceUp = !card.isFaceUp;
     }
 }
+
+-(NSArray*) notPlayableCards{
+    NSMutableArray* cardIndexes;
+    for(Card* card in self.cards){
+        if(card.isUnplayable){
+            if(!cardIndexes){
+                cardIndexes = [[NSMutableArray alloc] init];
+            }
+            [cardIndexes addObject:[[NSNumber alloc] initWithInteger:[self.cards indexOfObject:card]]];
+        }
+    }
+    return cardIndexes;
+}
+
+
+
+-(void) deleteCardsAtIndexes:(NSArray*)indexes{
+    NSMutableArray* toDelete;
+    for(NSNumber* index in indexes){
+        if(!toDelete){
+            toDelete = [[NSMutableArray alloc] init];
+        }
+        [toDelete addObject:[self.cards objectAtIndex:[index integerValue]]];
+    }
+    [self.cards removeObjectsInArray:toDelete];
+}
+
 
 
 -(NSString *) description{

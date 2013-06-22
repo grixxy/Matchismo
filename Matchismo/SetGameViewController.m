@@ -13,11 +13,21 @@
 #import "SetCardCollectionViewCell.h"
 
 @interface SetGameViewController ()
+@property (weak, nonatomic) IBOutlet UIButton *addButton;
 
 @end
 
 @implementation SetGameViewController
 
+- (IBAction)add3Cards:(id)sender {
+    [self.game drawAdditionalCards:3];
+    [self.cardCollectionView reloadData];
+    NSUInteger indexes[] = {0,[self.game.cards count]-1};
+    NSIndexPath * lastPath = [[NSIndexPath alloc] initWithIndexes:indexes length:2];
+    [self.cardCollectionView scrollToItemAtIndexPath:lastPath atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
+    [self updateUI];
+    
+}
 
 
 -(CardMatchingGame *) game{
@@ -38,7 +48,8 @@
 }
 
 
-#define DEFAULT_SET_CARDS 12
+
+#define DEFAULT_SET_CARDS 10
 -(NSNumber*) startingCardCount {
     if(!super.startingCardCount){
         super.startingCardCount = [[NSNumber alloc] initWithInt:DEFAULT_SET_CARDS];
@@ -49,10 +60,14 @@
 
 
 -(void) updateUI{
+    [self removeUnplayableCards];
     [super updateUI];
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     self.lastFlipLabel.attributedText = [self textForLabelWithResults:self.game.lastActionResult];
-  
+    
+    [self.addButton setEnabled:[self.game deckHasMoreCards]];
+    [self.addButton setAlpha:[self.game deckHasMoreCards]?1:0.3];
+    
 }
 
 -(void) updateCell:(UICollectionViewCell *)cell usingCard:(Card*) card{
@@ -64,16 +79,40 @@
             setCardView.color = [self mapColor:setCard.color];
             setCardView.shape = [self mapShape:setCard.symbol];
             setCardView.numberOfShapes = [setCard.number intValue];
-            setCardView.alpha = setCard.isUnplayable ? 0.3: 1.0;
+            setCardView.alpha = setCard.isFaceUp ? 0.3: 1.0;
         }
     }
     
 }
 
 
+
+-(void)removeUnplayableCards{
+    NSArray* indexes = [self.game notPlayableCards];
+    if(indexes) {
+     [self.game deleteCardsAtIndexes:indexes];
+     indexes = [self getIndexPathArrayFromIndexes:indexes];
+     [self.cardCollectionView deleteItemsAtIndexPaths:indexes];
+    }
+}
+
+-(NSArray*)getIndexPathArrayFromIndexes:(NSArray*)indexes{
+    NSMutableArray* indexPaths;
+    for(NSNumber* index in indexes){
+        if(!indexPaths) indexPaths = [[NSMutableArray alloc] init] ;
+        NSUInteger indexArr[] = {0,[index integerValue]};
+        NSIndexPath* ip = [NSIndexPath indexPathWithIndexes:indexArr length:2];
+        [indexPaths addObject:ip];
+    }
+    return indexPaths;
+}
+
+
+
+
 -(UIColor*) mapColor:(NSString*)color{
     if([color isEqualToString:@"green"]){
-        return [UIColor blueColor];
+        return [UIColor greenColor];
     }
     if([color isEqualToString:@"red"]){
         return [UIColor redColor];

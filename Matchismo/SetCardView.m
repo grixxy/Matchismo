@@ -20,6 +20,16 @@
 
 
 
+-(void)setColor:(UIColor *)color{
+    _color = color;
+  [self setNeedsDisplay];
+}
+
+-(void) setShading:(NSString *)shading{
+    _shading = shading;
+ [self setNeedsDisplay];
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -69,6 +79,7 @@
     _shapeLengthX = SHAPE_LENGTH_TO_MAX_LENGTH_RATIO*maxShapeLengthX;
     _shapeLengthY = _shapeLengthX/shapeLengthToHighRatio;
     _startPointX = self.bounds.size.width/2 - (_shapeLengthX/2);
+      [self setNeedsDisplay];
 
 }
 
