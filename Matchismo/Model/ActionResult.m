@@ -10,4 +10,19 @@
 
 @implementation ActionResult
 
+-(void)addFlippedCard:(Card *)card{
+    if(!self.flippedCards){
+        self.flippedCards = [[NSMutableArray alloc] init];
+    }
+    [self.flippedCards addObject:card];
+}
+
+-(void)removeFlippedCard:(Card *)card{
+    if(self.flippedCards){
+        [self.flippedCards removeObject:card];
+    }
+    
+}
+
+
 @end

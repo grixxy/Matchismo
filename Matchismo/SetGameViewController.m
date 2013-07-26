@@ -13,7 +13,12 @@
 #import "SetCardCollectionViewCell.h"
 
 @interface SetGameViewController ()
+@property (weak, nonatomic) IBOutlet SetCardView *card;
+@property (weak, nonatomic) IBOutlet UITextView *lastActionText;
+
+
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
+@property (strong, nonatomic) IBOutletCollection(SetCardView) NSArray *pickedCards;
 
 @end
 
@@ -63,7 +68,7 @@
     [self removeUnplayableCards];
     [super updateUI];
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-    self.lastFlipLabel.attributedText = [self textForLabelWithResults:self.game.lastActionResult];
+    [self updateGameStatus];
     
     [self.addButton setEnabled:[self.game deckHasMoreCards]];
     [self.addButton setAlpha:[self.game deckHasMoreCards]?1:0.3];
@@ -74,17 +79,23 @@
     if([cell isKindOfClass:[SetCardCollectionViewCell class]]){
         SetCardView* setCardView = ((SetCardCollectionViewCell*)cell).setCardView;
         if([card isKindOfClass:[SetCard class]]){
-            SetCard* setCard = (SetCard*) card;
-            setCardView.shading = setCard.shading;
-            setCardView.color = [self mapColor:setCard.color];
-            setCardView.shape = [self mapShape:setCard.symbol];
-            setCardView.numberOfShapes = [setCard.number intValue];
-            setCardView.alpha = setCard.isFaceUp ? 0.3: 1.0;
+            SetCard* setCard = (SetCard*)card;
+            [self updateSetCardView:setCardView withCard:setCard ignoringAlpha:FALSE];
         }
     }
     
 }
 
+-(void)updateSetCardView:(SetCardView*)setCardView withCard:(SetCard*)setCard ignoringAlpha: (BOOL)ignoreAlpha{
+    setCardView.shading = setCard.shading;
+    setCardView.color = [self mapColor:setCard.color];
+    setCardView.shape = [self mapShape:setCard.symbol];
+    setCardView.numberOfShapes = [setCard.number intValue];
+    if(!ignoreAlpha)
+       setCardView.alpha = setCard.isFaceUp ? 0.3: 1.0;
+    else setCardView.alpha=1;
+
+}
 
 
 -(void)removeUnplayableCards{
@@ -137,43 +148,60 @@
     return nil;
 }
 
--(NSAttributedString*) textForLabelWithResults:(ActionResult*) results {
-    
-    NSAttributedString* str;
-    if(!results.cards){
-        str = [[NSAttributedString alloc] initWithString:@""];
-    } else if(results.scoreChange>0){
-        NSMutableAttributedString * t_str = [[NSMutableAttributedString alloc] initWithString:@"Matched "];
-        [t_str appendAttributedString:[self joinCardStrings:results.cards]];
-        NSString * t_str2 = [NSString stringWithFormat:@" for %d points",results.scoreChange];
-        [t_str appendAttributedString:[[NSAttributedString alloc]initWithString:t_str2]];
-        str = t_str;
+-(void)updateGameStatus {
+    //update text
+    ActionResult* results = self.game.lastActionResult;
+    NSMutableAttributedString* str = [[NSMutableAttributedString alloc] initWithString:@""];
+   if(results.scoreChange>0){
+        NSString * t_str = [NSString stringWithFormat:@"Matched for %d points:",results.scoreChange];
+        str = [[NSMutableAttributedString alloc] initWithString:t_str];
+       [self updateCardResultView:results.matchedCards];
     } else if(results.scoreChange<0){
-        NSMutableAttributedString * t_str = [[NSMutableAttributedString alloc] init];
-        [t_str appendAttributedString:[self joinCardStrings:results.cards]];
-        NSString * t_str2 = [NSString stringWithFormat:@" didn't match %d points penalty",results.scoreChange];
-        [t_str appendAttributedString:[[NSAttributedString alloc]initWithString:t_str2]];
-        str = t_str;
-    } else {
-        NSMutableAttributedString * t_str = [[NSMutableAttributedString alloc] initWithString:@"Flipped up "];
-        [t_str appendAttributedString:[self joinCardStrings:results.cards]];
-        str = t_str;
-    }
-    return str;
+        NSString * t_str = [NSString stringWithFormat:@"Penalty %d for not matching cards:",results.scoreChange];
+        str = [[NSMutableAttributedString alloc] initWithString:t_str];
+        [self updateCardResultView:results.matchedCards];
+    } else if(results.scoreChange==0){
+        str = [[NSMutableAttributedString alloc] initWithString:@"Flipped up :"];
+        [self updateCardResultView:results.flippedCards];
+        
+    } 
+    self.lastActionText.attributedText = str;
+    
+    //show cards
+    
+    
     
 }
 
--(NSAttributedString*) joinCardStrings:(NSArray*)cards{
-    NSMutableAttributedString * str = [[NSMutableAttributedString alloc] init];
-    for(SetCard *card in cards){
-        [str appendAttributedString:[self getUIStringForCard:card]];
-        if(cards.lastObject!=card){
-           [str appendAttributedString:[[NSAttributedString alloc]initWithString:@","]];
+
+-(void) updateCardResultView:(NSArray*) cards {
+
+    for(int i=0;i<self.pickedCards.count;i++){
+        SetCardView* setCardView = (SetCardView*)[self getPickedCardByTagIndex:i];
+        
+        if(i<cards.count){
+            [self updateSetCardView:setCardView withCard:[cards objectAtIndex:i] ignoringAlpha:TRUE];
+        } else{
+            [self setBlankCard:setCardView];
         }
+        
     }
-    
-    
-    return str;
+
+}
+
+-(SetCardView*) getPickedCardByTagIndex:(int)index{
+    for(SetCardView* setCardView in self.pickedCards){
+        if([setCardView tag] == index) return setCardView;
+    }
+    return nil;
+}
+
+-(void) setBlankCard:(SetCardView*)setCardView{
+    setCardView.shading = nil;
+    setCardView.color =  nil;
+    setCardView.shape =  nil;
+    setCardView.numberOfShapes =  0;
+
 }
 
 -(NSAttributedString*) getUIStringForCard:(SetCard* )card{

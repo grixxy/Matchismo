@@ -80,23 +80,20 @@
 
 -(void)flipCardAtIndex:(NSUInteger) index{
     Card *card = [self cardAtIndex:index];
-    NSMutableArray *cardsToMatch = [[NSMutableArray alloc] init];
+    NSMutableArray *cardsToMatch = [self.lastActionResult.flippedCards copy];
     if(!card.isUnplayable){
         if(!card.isFaceUp){
+            
             self.score -= FLIP_COST;
-            self.lastActionResult.cards = @[card];
+            [self.lastActionResult addFlippedCard:card];
             self.lastActionResult.scoreChange = 0;
             
-            for(Card* otherCard in self.cards){
-                if(otherCard.isFaceUp && !otherCard.isUnplayable) {
-                    [cardsToMatch addObject:otherCard];
-                }
-            }
-            NSMutableArray* allCards =[[NSMutableArray alloc]initWithArray:cardsToMatch];
-            [allCards addObject:card];
             
             if(cardsToMatch.count==self.numberOfCardsToCompare-1){
                 //time to count score!!!
+                self.lastActionResult.matchedCards = [self.lastActionResult.flippedCards copy];
+                self.lastActionResult.flippedCards = nil;
+                
                 int matchScore = [card match:cardsToMatch];
                 if(matchScore){
                     //unplayable TRUE
@@ -105,21 +102,24 @@
                     card.unplayable = YES;
                     int win = matchScore * MATCH_BONUS;
                     self.score+=win;
-                    self.lastActionResult.cards = allCards;
                     self.lastActionResult.scoreChange = win;
                 
                 } else {
                     SEL faceUp = @selector(setFaceUp:);
-                    [cardsToMatch makeObjectsPerformSelector:faceUp withObject:NO];
+                    [self.lastActionResult.matchedCards makeObjectsPerformSelector:faceUp withObject:NO];
                     int lose = MISMATCH_PENALTY;
                     self.score -= lose;
-                    self.lastActionResult.cards = allCards;
                     self.lastActionResult.scoreChange = -lose;
+                    [self.lastActionResult addFlippedCard:card];
                     
                 }
             }
             
+        } else {
+            //flipped back
+            [self.lastActionResult removeFlippedCard:card];
         }
+       
         card.faceUp = !card.isFaceUp;
     }
 }

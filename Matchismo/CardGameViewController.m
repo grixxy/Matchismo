@@ -63,16 +63,15 @@
 
 -(NSString*) textForLabelWithResults:(ActionResult*) results {
     
-    NSString* str;
-    if(!results.cards){
-        str = @"";
-    } else if(results.scoreChange>0){
-     str = [NSString stringWithFormat:@"Matched %@ for %d points",[results.cards componentsJoinedByString:@", "] , results.scoreChange];
+    NSString* str =  @"";
+
+    if(results.scoreChange>0){
+     str = [NSString stringWithFormat:@"Matched %@ for %d points",[results.matchedCards componentsJoinedByString:@", "] , results.scoreChange];
     } else if(results.scoreChange<0){
-        str = [NSString stringWithFormat:@"%@ didn't match! %d points penalty!",[results.cards componentsJoinedByString:@", "], results.scoreChange];
-    } else {
-     str = [NSString stringWithFormat:@"Flipped up %@ ", [results.cards lastObject] ];
-    }
+        str = [NSString stringWithFormat:@"%@ didn't match! %d points penalty!",[results.matchedCards  componentsJoinedByString:@", "], results.scoreChange];
+    } else if(results.scoreChange==0) {
+     str = [NSString stringWithFormat:@"Flipped up %@ ", [results.flippedCards lastObject] ];
+    } 
     return str;
     
 }

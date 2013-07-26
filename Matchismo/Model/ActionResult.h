@@ -7,12 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Card.h"
 
 @interface ActionResult : NSObject
 
 
-@property (nonatomic) NSArray* cards;
+@property (nonatomic) NSArray* matchedCards;
 
+@property (nonatomic) NSMutableArray* flippedCards;
 @property (nonatomic) int scoreChange;
+
+-(void)addFlippedCard:(Card *)card;
+-(void)removeFlippedCard:(Card *)card;
 
 @end
